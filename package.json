@@ -1,0 +1,22 @@
+{
+  "name": "babble-note",
+  "version": "0.1.0",
+  "description": "A conversational note app.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bachmann1234/babble-note"
+  },
+  "author": "Matt Bachmann <bachmann.matt@gmail.com>",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {},
+  "scripts": {
+    "install": "neon build",
+    "build": "electron-build-env neon build --release",
+    "start": "electron lib"
+  },
+  "devDependencies": {
+    "electron": "^9.0.2",
+    "electron-build-env": "^0.2.0",
+    "neon-cli": "^0.4.0"
+  }
+}
