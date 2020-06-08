@@ -1,7 +1,7 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-const ipc = window.require('electron').ipcRenderer
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+const ipc = window.require("electron").ipcRenderer;
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {ipc.sendSync('hello')}
+          {ipc.sendSync("hello")}
         </a>
       </header>
     </div>
