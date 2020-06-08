@@ -21,7 +21,7 @@
   "main": "electronMain.js",
   "homepage": "./",
   "scripts": {
-    "build": "electron-build-env neon build babble-backend --release; react-scripts build",
+    "build": "electron-build-env neon build babble-backend --release; react-csp prod && react-scripts build",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "electron": "electron .",
@@ -33,7 +33,8 @@
   "devDependencies": {
     "electron": "^9.0.2",
     "electron-build-env": "^0.2.0",
-    "neon-cli": "^0.4.0"
+    "neon-cli": "^0.4.0",
+    "react-csp": "^1.1.0"
   },
   "browserslist": {
     "production": [
