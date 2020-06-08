@@ -1,22 +1,50 @@
 {
   "name": "babble-note",
   "version": "0.1.0",
+  "private": true,
   "description": "A conversational note app.",
   "repository": {
     "type": "git",
     "url": "https://github.com/Bachmann1234/babble-note"
   },
   "author": "Matt Bachmann <bachmann.matt@gmail.com>",
-  "license": "GPL-3.0-or-later",
-  "dependencies": {},
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "babble-backend": "file:babble-backend-src",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1"
+  },
+  "main": "electronMain.js",
+  "homepage": "./",
   "scripts": {
-    "install": "neon build",
-    "build": "electron-build-env neon build --release",
-    "start": "electron lib"
+    "build": "electron-build-env neon build babble-backend --release; react-scripts build",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "electron": "electron .",
+    "electron-dev": "ELECTRON_START_URL=http://localhost:3000 electron ."
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "devDependencies": {
     "electron": "^9.0.2",
     "electron-build-env": "^0.2.0",
     "neon-cli": "^0.4.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

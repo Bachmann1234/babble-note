@@ -1,7 +1,8 @@
 const { app, BrowserWindow } = require('electron')
-const addon = require('../native');
-
-console.log(addon.hello());
+const url = require('url');
+const path = require('path');
+const ipc = require('electron').ipcMain;
+const babbleBackend = require('babble-backend')
 
 function createWindow () {
     const win = new BrowserWindow({
@@ -12,8 +13,12 @@ function createWindow () {
         }
     })
 
-    win.loadFile('index.html')
-
+    const startUrl = process.env.ELECTRON_START_URL || url.format({
+        pathname: path.join(__dirname, '/build/index.html'),
+        protocol: 'file:',
+        slashes: true
+    });
+    win.loadURL(startUrl);
     win.webContents.openDevTools()
 }
 
@@ -30,3 +35,6 @@ app.on('activate', () => {
         createWindow()
     }
 })
+ipc.on('hello', (event, args) => {
+    event.returnValue = babbleBackend.hello();
+});

@@ -1,14 +1,14 @@
 [package]
-name = "babble-note"
+name = "babble-backend"
 version = "0.1.0"
 authors = ["Matt Bachmann <bachmann.matt@gmail.com>"]
-license = "GPL-3.0-or-later"
+license = "MIT"
 build = "build.rs"
 edition = "2018"
 exclude = ["artifacts.json", "index.node"]
 
 [lib]
-name = "babble_note"
+name = "babble_backend"
 crate-type = ["cdylib"]
 
 [build-dependencies]

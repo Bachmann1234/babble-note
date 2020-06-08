@@ -1,0 +1,25 @@
+{
+  "name": "babble-backend",
+  "version": "0.1.0",
+  "description": "Babble Note Backend",
+  "main": "lib/index.js",
+  "private": true,
+  "author": "Matt Bachmann <bachmann.matt@gmail.com>",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bachmann1234/babble-note"
+  },
+  "dependencies": {
+    "neon-cli": "^0.4.0"
+  },
+  "scripts": {
+    "build": "electron-build-env neon build --release",
+    "install": "npm run build",
+    "test": "npm run build"
+  },
+  "devDependencies": {
+    "neon-cli": "^0.4.0",
+    "electron-build-env": "^0.2.0"
+  }
+}
