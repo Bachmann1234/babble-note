@@ -2,7 +2,9 @@ const { app, BrowserWindow } = require('electron')
 const url = require('url');
 const path = require('path');
 const ipc = require('electron').ipcMain;
-const babbleBackend = require('babble-backend')
+const { fork } = require('child_process');
+
+const babbleWorker = fork('./work.js');
 
 function createWindow () {
     const win = new BrowserWindow({
@@ -36,5 +38,8 @@ app.on('activate', () => {
     }
 })
 ipc.on('hello', (event) => {
-    event.sender.send('hello-reply', babbleBackend.hello());
+    babbleWorker.once('message', (message) => {
+        event.sender.send('hello-reply', message);
+    });
+    babbleWorker.send("hello")
 });

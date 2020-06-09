@@ -4,6 +4,10 @@ import "./App.css";
 import { useAsync } from "react-async";
 const ipc = window.require("electron").ipcRenderer;
 
+//todo. this is incorrect.
+// You should be leveraging lifecycle methods and using
+// the subscriptions directly to update component state
+// rather than wrapping up the ipc stuff in promises
 const loadHello = async () => {
   return new Promise((resolve, _) => {
     ipc.once("hello-reply", function (_, result) {
