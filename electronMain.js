@@ -35,6 +35,6 @@ app.on('activate', () => {
         createWindow()
     }
 })
-ipc.on('hello', (event, args) => {
-    event.returnValue = babbleBackend.hello();
+ipc.on('hello', (event) => {
+    event.sender.send('hello-reply', babbleBackend.hello());
 });

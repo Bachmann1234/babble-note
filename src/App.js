@@ -1,9 +1,30 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
+import { useAsync } from "react-async";
 const ipc = window.require("electron").ipcRenderer;
 
+const loadHello = async () => {
+  return new Promise((resolve, _) => {
+    ipc.once("hello-reply", function (_, result) {
+      resolve(result);
+    });
+    ipc.send("hello");
+  });
+};
+
 function App() {
+  const { data, error, isPending } = useAsync({
+    promiseFn: loadHello,
+  });
+  let result = "?";
+  if (isPending) {
+    result = "Loading...";
+  } else if (error) {
+    result = `Something went wrong: ${error.message}`;
+  } else if (data) {
+    result = data;
+  }
   return (
     <div className="App">
       <header className="App-header">
@@ -17,7 +38,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {ipc.sendSync("hello")}
+          {result}
         </a>
       </header>
     </div>
