@@ -4,15 +4,15 @@ import "./App.css";
 const ipc = window.require("electron").ipcRenderer;
 
 function App() {
-  const [helloState, setHelloState] = useState("Loading...");
+  const [helloState, setHelloState] = useState("Click The Button");
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  useEffect(function () {
+  useEffect(() => {
     ipc.on("hello-reply", (_, result) => {
+      setButtonDisabled(false);
       setHelloState(result);
     });
-    ipc.send("hello");
-
-    return function cleanup() {
+    return () => {
       ipc.removeAllListeners("hello-reply");
     };
   }, []);
@@ -32,6 +32,17 @@ function App() {
         >
           {helloState}
         </a>
+        <br />
+        <button
+          onClick={() => {
+            setButtonDisabled(true);
+            setHelloState("Loading Hello!");
+            ipc.send("hello");
+          }}
+          disabled={buttonDisabled}
+        >
+          Click me
+        </button>
       </header>
     </div>
   );
