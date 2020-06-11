@@ -1,34 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { useAsync } from "react-async";
 const ipc = window.require("electron").ipcRenderer;
 
-//todo. this is incorrect.
-// You should be leveraging lifecycle methods and using
-// the subscriptions directly to update component state
-// rather than wrapping up the ipc stuff in promises
-const loadHello = async () => {
-  return new Promise((resolve, _) => {
-    ipc.once("hello-reply", function (_, result) {
-      resolve(result);
+function App() {
+  const [helloState, setHelloState] = useState("Loading...");
+
+  useEffect(function () {
+    ipc.on("hello-reply", (_, result) => {
+      setHelloState(result);
     });
     ipc.send("hello");
-  });
-};
 
-function App() {
-  const { data, error, isPending } = useAsync({
-    promiseFn: loadHello,
-  });
-  let result = "?";
-  if (isPending) {
-    result = "Loading...";
-  } else if (error) {
-    result = `Something went wrong: ${error.message}`;
-  } else if (data) {
-    result = data;
-  }
+    return function cleanup() {
+      ipc.removeAllListeners("hello-reply");
+    };
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -42,7 +30,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          {result}
+          {helloState}
         </a>
       </header>
     </div>
