@@ -1,20 +1,14 @@
-matrix:
-  include:
-     - language: node_js
-       node_js:
-         - 14
-       cache:
-         directories:
-           - node_modules
-       script:
-         - npm i
-         - npm run build
-         - npm test
-     - language: rust
-       rust:
-         - stable
-       cache: cargo
-       script:
-         - cd babble-backend-src/native
-         - cargo build --verbose --all
-         - cargo test --verbose --all
+language: rust
+rust:
+  - stable
+before_install:
+  - source $HOME/.nvm/nvm.sh
+  - nvm install ${TRAVIS_NODE_VERSION}
+  - nvm use ${TRAVIS_NODE_VERSION}
+  - node -v
+  - npm -v
+cache: cargo
+script:
+  - npm i
+  - npm run build
+  - npm test
