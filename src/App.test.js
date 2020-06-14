@@ -3,7 +3,7 @@ import { fireEvent } from "@testing-library/react";
 import { render, ipcMain } from "test-utils";
 import App from "./App";
 
-test("renders learn react link", async () => {
+test("Renders link text when button hit", async () => {
   ipcMain.once("hello", (event, _) => {
     event.sender.send("hello-reply", "Tested!");
   });
