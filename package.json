@@ -69,7 +69,8 @@
     },
     "coveragePathIgnorePatterns" : [
       "<rootDir>/src/serviceWorker.js",
-      "<rootDir>/src/index.js"
+      "<rootDir>/src/index.js",
+      "<rootDir>/src/electronMain.js"
     ]
   }
 }
