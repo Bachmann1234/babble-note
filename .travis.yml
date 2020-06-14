@@ -1,6 +1,8 @@
 language: rust
 rust:
   - stable
+env:
+  - NODE_PATH=src/utils
 before_install:
   - source $HOME/.nvm/nvm.sh
   - nvm install 14.3.0
