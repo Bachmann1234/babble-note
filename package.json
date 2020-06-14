@@ -22,7 +22,7 @@
     "react-scripts": "3.4.1",
     "electron-build-env": "^0.2.0"
   },
-  "main": "electronMain.js",
+  "main": "src/electronMain.js",
   "homepage": "./",
   "scripts": {
     "build": "electron-build-env neon build babble-backend --release; react-csp prod && react-scripts build",
@@ -66,6 +66,10 @@
   "jest": {
     "moduleNameMapper": {
       "^electron$": "<rootDir>/src/utils/test-utils.js"
-    }
+    },
+    "coveragePathIgnorePatterns" : [
+      "<rootDir>/src/serviceWorker.js",
+      "<rootDir>/src/index.js"
+    ]
   }
 }
