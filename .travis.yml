@@ -11,6 +11,9 @@ before_install:
   - npm -v
 cache: cargo
 script:
+  - cd babble-backend-src/native
+  - cargo test
+  - cd ../../
   - npm i
   - npm run build
   - npm test
