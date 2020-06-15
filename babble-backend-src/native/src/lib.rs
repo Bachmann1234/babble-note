@@ -2,12 +2,9 @@ use neon::prelude::*;
 use std::{thread, time};
 extern crate migrant_lib;
 
-#[cfg(feature = "d-sqlite")]
-use migrant_lib::{Config, Direction, Migrator, Settings};
-#[cfg(feature = "d-sqlite")]
+use migrant_lib::{Config, Migrator, Settings};
 use std::env;
 
-#[cfg(feature = "d-sqlite")]
 fn prep_db() -> Result<(), Box<dyn std::error::Error>> {
     let path = env::current_dir()?;
     let path = path.join("db/embedded_example.db");
@@ -18,38 +15,19 @@ fn prep_db() -> Result<(), Box<dyn std::error::Error>> {
     macro_rules! make_migration {
         ($tag:expr) => {
             migrant_lib::EmbeddedMigration::with_tag($tag)
-                .up(include_str!(concat!(
-                    "../migrations/"
-                    $tag,
-                    "/up.sql"
-                )))
-                .down(include_str!(concat!(
-                    "../migrations/",
-                    $tag,
-                    "/down.sql"
-                )))
+                .up(include_str!(concat!("../migrations/", $tag, "/up.sql")))
+                .down(include_str!(concat!("../migrations/", $tag, "/down.sql")))
                 .boxed()
         };
     }
 
     config.use_migrations(&[make_migration!("20200615025736_init")])?;
 
-    // Reload config, ping the database for applied migrations
-    let config = config.reload()?;
-
     Migrator::with_config(&config)
         .all(true)
         .show_output(false)
         .swallow_completion(true)
         .apply()?;
-
-    let config = config.reload()?;
-    migrant_lib::list(&config)?;
-    Ok(())
-}
-#[cfg(not(feature = "d-sqlite"))]
-fn prep_db() -> Result<(), Box<dyn std::error::Error>> {
-    Err("d-sqlite database feature required")?;
     Ok(())
 }
 
