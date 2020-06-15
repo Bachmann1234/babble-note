@@ -5,7 +5,7 @@ extern crate migrant_lib;
 use migrant_lib::{Config, Migrator, Settings};
 use std::env;
 
-fn prep_db() -> Result<(), Box<dyn std::error::Error>> {
+fn prep_db() -> Result<Config, Box<dyn std::error::Error>> {
     let path = env::current_dir()?;
     let path = path.join("db/embedded_example.db");
     let settings = Settings::configure_sqlite().database_path(&path)?.build()?;
@@ -28,7 +28,7 @@ fn prep_db() -> Result<(), Box<dyn std::error::Error>> {
         .show_output(false)
         .swallow_completion(true)
         .apply()?;
-    Ok(())
+    Ok(config)
 }
 
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
