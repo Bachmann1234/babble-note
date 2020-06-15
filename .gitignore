@@ -130,3 +130,4 @@ dist
 .DS_Store
 .idea
 build
+babble-backend-src/native/db/babblebase.sqlite
