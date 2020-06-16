@@ -1,4 +1,5 @@
 # babble-note
+[![Build Status](https://travis-ci.org/Bachmann1234/babble-note.svg?branch=master)](https://travis-ci.org/Bachmann1234/babble-note)
 
 A conversational note app.
 
