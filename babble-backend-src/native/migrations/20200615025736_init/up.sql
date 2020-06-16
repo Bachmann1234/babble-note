@@ -1,3 +1,4 @@
+BEGIN TRANSACTION;
 CREATE TABLE tag (
     id INTEGER PRIMARY KEY,
     label TEXT
@@ -26,5 +27,4 @@ CREATE TABLE tagged_notes (
     FOREIGN KEY(note_id) REFERENCES note(id),
     FOREIGN KEY(tag_id) REFERENCES tag(id)
 );
-
-
+COMMIT;
