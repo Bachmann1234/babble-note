@@ -4,7 +4,7 @@ const path = require("path");
 const ipc = require("electron").ipcMain;
 const { fork } = require("child_process");
 
-const babbleWorker = fork("./work.js");
+const babbleWorker = fork("./src/work.js");
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -25,6 +25,10 @@ function createWindow() {
   win.loadURL(startUrl);
   win.webContents.openDevTools();
 }
+babbleWorker.once("message", (message) => {
+  console.log(message);
+});
+babbleWorker.send("initializeDb");
 
 app.whenReady().then(createWindow);
 

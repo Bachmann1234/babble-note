@@ -25,7 +25,7 @@
   "main": "src/electronMain.js",
   "homepage": "./",
   "scripts": {
-    "build": "electron-build-env neon build babble-backend --release; react-csp prod && react-scripts build",
+    "build": "electron-build-env neon build babble-backend --release; react-csp prod && INLINE_RUNTIME_CHUNK=false react-scripts build",
     "start": "react-scripts start",
     "test": "react-scripts test",
     "electron": "electron .",

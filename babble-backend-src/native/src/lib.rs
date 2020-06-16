@@ -5,7 +5,7 @@ extern crate migrant_lib;
 use migrant_lib::{Config, Migrator, Settings};
 use std::env;
 
-fn prep_db() -> Result<Config, Box<dyn std::error::Error>> {
+fn initialize_db() -> Result<Config, Box<dyn std::error::Error>> {
     let path = env::current_dir()?;
     let path = path.join("db/embedded_example.db");
     let settings = Settings::configure_sqlite().database_path(&path)?.build()?;
@@ -22,6 +22,7 @@ fn prep_db() -> Result<Config, Box<dyn std::error::Error>> {
     }
 
     config.use_migrations(&[make_migration!("20200615025736_init")])?;
+    let config = config.reload()?;
 
     Migrator::with_config(&config)
         .all(true)
@@ -32,9 +33,17 @@ fn prep_db() -> Result<Config, Box<dyn std::error::Error>> {
 }
 
 fn hello(mut cx: FunctionContext) -> JsResult<JsString> {
-    prep_db().unwrap();
     thread::sleep(time::Duration::from_secs(5));
     Ok(cx.string("We are live"))
 }
 
-register_module!(mut cx, { cx.export_function("hello", hello) });
+fn js_initialize_db(mut cx: FunctionContext) -> JsResult<JsString> {
+    initialize_db().unwrap();
+    Ok(cx.string("Database Initialized"))
+}
+
+register_module!(mut cx, {
+    cx.export_function("hello", hello)?;
+    cx.export_function("initializeDb", js_initialize_db)?;
+    Ok(())
+});
