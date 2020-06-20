@@ -5,9 +5,10 @@ extern crate migrant_lib;
 use migrant_lib::{Config, Migrator, Settings};
 use std::env;
 
+static DB_PATH: &str = "../db/babblebase.sqlite";
+
 fn initialize_db() -> Result<Config, Box<dyn std::error::Error>> {
-    let path = env::current_dir()?;
-    let path = path.join("db/embedded_example.db");
+    let path = env::current_dir()?.join(DB_PATH);
     let settings = Settings::configure_sqlite().database_path(&path)?.build()?;
     let mut config = Config::with_settings(&settings);
     config.setup()?;
